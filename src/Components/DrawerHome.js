@@ -23,7 +23,7 @@ class DrawerHome extends React.Component{
                             data = {[{Menuname: 'Home', icon: ''}, {Menuname: 'Login', icon: ''}]}
                             
 							renderItem = {({item}) => { return (
-								<TouchableOpacity style={styles.flhome} onPress={()=>  alert(item.Menuname)}>
+								<TouchableOpacity style={styles.flhome} onPress={()=>  this.props.navigation.navigate(item.Menuname)}>
                                     {/* <Image style={{ width:24, height:24 }} source={{ uri: require('../assets/img/1564481740.jpg') }}/> */}
 									<Text numberOfLines={1} style={styles.drawer}>{item.Menuname}</Text>
 								</TouchableOpacity>

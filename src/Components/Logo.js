@@ -7,7 +7,7 @@ export default class Logo extends Component<{}> {
       <View style={styles.container}>
         <Text
           style={{
-            fontSize: 24,
+            fontSize: 35,
             fontWeight: "bold",
             fontFamily: "sans-serif-condensed",
             textAlign: "center",
