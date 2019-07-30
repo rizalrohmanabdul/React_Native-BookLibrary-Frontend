@@ -68,7 +68,7 @@ class Homepage extends Component {
           >
             <TextInput style={component.input} placeholder="Search" />
           </View>
-          <View style={{flex: 1, width: '100%'}}>
+          <View style={{flex: 1, width: '100%' , flexDirection: 'row'}}>
           <FlatList
             data={this.state.bookhome}
               ListFooteerComponent={this.renderFooter}

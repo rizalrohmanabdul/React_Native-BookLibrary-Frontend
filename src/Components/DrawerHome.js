@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, ScrollView, Text, StyleSheet, FlatList, Image, TouchableOpacity, Modal, Alert } from 'react-native'
 import { connect } from 'react-redux'
+import { Icon} from 'native-base';
 
 
 class DrawerHome extends React.Component{
@@ -12,18 +13,19 @@ class DrawerHome extends React.Component{
                         style={styles.image}
 						source={require('../assets/img/1564481740.jpg')}
 					/>
-					<Text>
+					<Text style={styles.name}>
 						Manajemen Book
 					</Text>
 				</View>
 				<ScrollView>
 					<View>
 						<FlatList
-							data = {[{key: 'a'}, {key: 'b'}]}
+                            data = {[{Menuname: 'Home', icon: ''}, {Menuname: 'Login', icon: ''}]}
+                            
 							renderItem = {({item}) => { return (
-								<TouchableOpacity>
-									{/* <Image style={{ width:24, height:24 }} source={{ uri: item.url_image }}/> */}
-									<Text numberOfLines={1} style={styles.drawer}>xxxx</Text>
+								<TouchableOpacity style={styles.flhome} onPress={()=>  alert(item.Menuname)}>
+                                    {/* <Image style={{ width:24, height:24 }} source={{ uri: require('../assets/img/1564481740.jpg') }}/> */}
+									<Text numberOfLines={1} style={styles.drawer}>{item.Menuname}</Text>
 								</TouchableOpacity>
 							)}}/>
 					</View>
@@ -59,7 +61,7 @@ const styles = StyleSheet.create({
 		fontSize: 15,
 		paddingLeft: 10
 	},
-	category: {
+	flhome: {
 		width: '100%', 
 		flexDirection: 'row', 
 		alignItems: 'center', 

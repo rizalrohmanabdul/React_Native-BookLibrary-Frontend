@@ -1,10 +1,12 @@
 import { createAppContainer, createStackNavigator, createDrawerNavigator, createSwitchNavigator } from 'react-navigation';
 import Home from '../Screen/Homepage'
+import Login from '../Screen/Login'
 import Drawerhome from '../Components/DrawerHome'
 const HomeNavigator = createStackNavigator({
-    Home
+    Home,
+    Login
 }, {
-    initialRouteName:'Home',
+    initialRouteName:'Login',
     headerMode: 'none'
 }
 )
