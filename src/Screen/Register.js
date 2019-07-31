@@ -22,15 +22,9 @@ class Register extends Component {
       {label: 'Perempuan', value: 0 },
       {label: 'Laki-Laki', value: 1 }
     ];
-    const registerList =() =>{
-      this.state.registerlist.push({				
-        'id_ktp':this.state.id_ktp,
-        'nama_peminjam':this.state.nama_peminjam,
-        'jk': this.state.jk,
-        'alamat': this.state.alamat,
-        'email': this.state.email,
-        'password': this.state.password
-      })
+    const registerList = async() =>{
+      await this.props.dispatch(registrasiPeminjam(this.state))    
+      console.warn(this.state)
     }
     return (
       <View style={styles.container}>
@@ -44,7 +38,7 @@ class Register extends Component {
               placeholderTextColor="#ffffff"
               selectionColor="#fff"
               keyboardType="email-address"
-              onSubmitEditing={() => this.password.focus()}
+              onChangeText = {(e)=>this.setState({id_ktp:e})}
             />
             <TextInput
               style={styles.inputBox}
@@ -53,9 +47,9 @@ class Register extends Component {
               placeholderTextColor="#ffffff"
               selectionColor="#fff"
               keyboardType="email-address"
-              onSubmitEditing={() => this.password.focus()}
+              onChangeText = {(e)=>this.setState({nama_peminjam:e})}              
             />
-            <RadioForm radio_props={radio_props} buttonColor={'#fff'} labelColor={'#fff'} initial={0} formHorizontal={true}  onPress={(value) => {this.setState({value:value})}} />
+            <RadioForm radio_props={radio_props} buttonColor={'#fff'} labelColor={'#fff'} initial={0} formHorizontal={true}  onPress={(jk) => {this.setState({jk:jk})}} onChangeText = {(e)=>this.setState({jk:e})}/>
             <TextInput
               style={styles.inputBox}
               underlineColorAndroid="rgba(0,0,0,0)"
@@ -63,7 +57,7 @@ class Register extends Component {
               placeholderTextColor="#ffffff"
               selectionColor="#fff"
               keyboardType="email-address"
-              onSubmitEditing={() => this.password.focus()}
+              onChangeText = {(e)=>this.setState({alamat:e})}
             />
             <TextInput
               style={styles.inputBox}
@@ -72,7 +66,7 @@ class Register extends Component {
               placeholderTextColor="#ffffff"
               selectionColor="#fff"
               keyboardType="email-address"
-              onSubmitEditing={() => this.password.focus()}
+              onChangeText = {(e)=>this.setState({email:e})}
             />
             <TextInput
               style={styles.inputBox}
@@ -80,16 +74,16 @@ class Register extends Component {
               placeholder="Password"
               secureTextEntry={true}
               placeholderTextColor="#ffffff"
-              ref={input => (this.password = input)}
+              onChangeText = {(e)=>this.setState({password:e})}
             />
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={registerList.bind(this)}>
               <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
         <View style={styles.signupTextCont}>
           <Text style={styles.signupText}>You have an account yet?</Text>
-          <TouchableOpacity onPress={this.signup}>
+          <TouchableOpacity onPress={()=>  this.props.navigation.navigate('Login')}>
             <Text style={styles.signupButton}> Sigin</Text>
           </TouchableOpacity>
         </View>

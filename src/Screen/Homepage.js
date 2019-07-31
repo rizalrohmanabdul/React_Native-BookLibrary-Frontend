@@ -68,34 +68,32 @@ class Homepage extends Component {
           >
             <TextInput style={component.input} placeholder="Search" />
           </View>
-          <View style={{flex: 1, width: '100%' , flexDirection: 'row'}}>
-          <FlatList
-            data={this.state.bookhome}
+            <FlatList
+              data={this.state.bookhome}
               ListFooteerComponent={this.renderFooter}
-            numColumns={2}
-            style={{ paddingLeft: 15, paddingRight: 15 }}
-            keyExtractor={item => item.id_buku.toString()}
-            renderItem={({ item }) => {
-              return (
-                <TouchableOpacity  onPress={()=>  alert(item.id_buku)}>
-                  <Card style={{ margin: 8, borderRadius: 8 }} elevation={4}>
-                    <Image
-                      style={{
-                        width: 150,
-                        height: 200,
-                        borderRadius: 8
-                      }}
-                      source={{ uri: item.gbr }}
-                    />
-                    <CardItem footer bordered>
-                      <Text>{text(item.nama_buku)}</Text>
-                    </CardItem>
-                  </Card>
-                </TouchableOpacity>
-              );
-            }}
-          />
-          </View>
+              numColumns={2}
+              style={{ paddingLeft: 15, paddingRight: 15, flex: 1, height: '100%' }}
+              keyExtractor={item => item.id_buku.toString()}
+              renderItem={({ item }) => {
+                return (
+                  <TouchableOpacity  onPress={()=>  alert(item.id_buku)}>
+                    <Card style={{ margin: 8, borderRadius: 8 }} elevation={4}>
+                      <Image
+                        style={{
+                          width: 150,
+                          height: 200,
+                          borderRadius: 8
+                        }}
+                        source={{ uri: item.gbr }}
+                      />
+                      <CardItem footer bordered>
+                        <Text>{text(item.nama_buku)}</Text>
+                      </CardItem>
+                    </Card>
+                  </TouchableOpacity>
+                );
+              }}
+            />
         </View>
       </React.Fragment>
     );
@@ -145,16 +143,15 @@ const component = StyleSheet.create({
     height: 45,
     borderRadius: 25,
     fontSize: 16,
-    paddingLeft: 50,
+    paddingLeft: 20,
     backgroundColor: "#eeeeee",
     marginHorizontal: 25,
-    marginTop: 10,
     marginBottom: 10
   },
   body: {
-    marginTop: 80,
+    marginTop: 70,
     width: "96%",
-    height: 1000,
+    flex: 1,
     backgroundColor: "#fff",
     alignSelf: "center",
     borderRadius: 15,

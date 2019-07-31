@@ -1,8 +1,8 @@
 import axios from "axios";
-let URL = 'http://localhost:3342'
+let URL = 'http://192.168.100.42:3342'
 
-let token = localStorage.getItem("token")
-let id = localStorage.getItem("id")
+let token = ''
+let id = ''
 let auth ={
   'authorization' : 'w3lc0meto4pp',
   'x-access-token' : token,
@@ -20,22 +20,20 @@ export const getPeminjam = () => {
 };
 
 export const postPeminjam = (data) => {
-  console.log('ini dari aksi',data[0]);
-  // {id_ktp:data[0].id_ktp, nama_peminjam: data[0].nama_peminjam, alamat: data[0].alamat}
+  console.warn('coba bro', data)
   return {
     type: "POST_PEMINJAM",
-    payload: axios.post(URL+'/borrower', data[0], {
+    payload: axios.post(URL+'/borrower', data, {
       headers: auth
     })
   };
 };
 
 export const registrasiPeminjam = (data) => {
-  console.log('ini dari aksi',data[0]);
-  // {id_ktp:data[0].id_ktp, nama_peminjam: data[0].nama_peminjam, alamat: data[0].alamat}
+  console.warn('coba bro', data)
   return {
     type: "REGISTRASI_PEMINJAM",
-    payload: axios.post(URL+'/authuser/register', data[0])
+    payload: axios.post(URL+'/authuser/register', data)
   };
 };
 
