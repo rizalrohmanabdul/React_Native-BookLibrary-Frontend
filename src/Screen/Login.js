@@ -26,7 +26,7 @@ class Login extends Component {
       alert('Login Success !!!')
       this.props.navigation.navigate('AddFoto');
      }).catch((err)=>{
-       console.warn(err)
+       alert('Wrong Username And Password !!!')
      })
   }
 

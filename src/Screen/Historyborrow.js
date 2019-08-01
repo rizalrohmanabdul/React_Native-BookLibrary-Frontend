@@ -1,5 +1,6 @@
 import React, { Component } from "React";
 import moment from "moment";
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   FlatList,
   Text,
@@ -11,10 +12,10 @@ import {
   Image,
   StatusBar,
   ActivityIndicator,
-  AsyncStorage
 } from "react-native";
 import { getbyidUserPeminjaman } from "../Public/redux/actions/peminjaman";
 import { connect } from "react-redux";
+
 
 class Historyborrow extends Component {
   constructor(props) {
@@ -25,11 +26,12 @@ class Historyborrow extends Component {
     };
   }
   componentDidMount = async () => {
-    await this.props.dispatch(getbyidUserPeminjaman("35112378908001"));
+    const id = await AsyncStorage.getItem("id")
+    console.warn('jidsjdhjshdsjhdshdlaa', id)
+    await this.props.dispatch(getbyidUserPeminjaman(id));
     this.setState({
       peminjamanlist: this.props.listpeminjaman.listPeminjaman.result
     });
-    console.log("ini warm", this.state.peminjamanlist);
   };
   render() {
     return (
