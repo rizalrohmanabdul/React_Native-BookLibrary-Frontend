@@ -20,7 +20,7 @@ class DrawerHome extends React.Component{
 				<ScrollView>
 					<View>
 						<FlatList
-                            data = {[{Menuname: 'Home', icon: ''}, {Menuname: 'Login', icon: ''}]}
+                            data = {[{Menuname: 'Home', icon: ''}, {Menuname: 'Login', icon: ''},  {Menuname: 'History', icon: ''}]}
                             
 							renderItem = {({item}) => { return (
 								<TouchableOpacity style={styles.flhome} onPress={()=>  this.props.navigation.navigate(item.Menuname)}>

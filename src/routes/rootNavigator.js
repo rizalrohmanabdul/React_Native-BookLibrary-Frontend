@@ -2,17 +2,17 @@ import { createAppContainer, createStackNavigator, createDrawerNavigator, create
 import Home from '../Screen/Homepage'
 import Login from '../Screen/Login'
 import Register from '../Screen/Register'
-import Historyborrow from '../Screen/Historyborrow'
+import History from '../Screen/Historyborrow'
 import AddFoto from '../Screen/AddFoto'
 import Drawerhome from '../Components/DrawerHome'
 const HomeNavigator = createStackNavigator({
     Home,
     Login,
     Register,
-    Historyborrow,
+    History,
     AddFoto
 }, {
-    initialRouteName:'AddFoto',
+    initialRouteName:'Login',
     headerMode: 'none'
 }
 )

@@ -35,7 +35,6 @@ class Homepage extends Component {
   }
   componentDidMount = async () => {
     await this.props.dispatch(getHome());
-    console.log("ini dari props", this.props.listbookhome);
     this.setState({
       bookhome: this.props.listbookhome.listBuku.result
     });
@@ -54,10 +53,9 @@ class Homepage extends Component {
     return (
       <React.Fragment>
         <View style={component.header}>
-          {/* <View style={component.itemsHeader}>
-            
-          </View> */}
+          <View style={component.itemsHeader}>
           <Text style={component.items}>BOOK</Text>
+          </View>
         </View>
         <View style={component.body}>
           <View
@@ -115,10 +113,6 @@ const component = StyleSheet.create({
     borderBottomColor: "black",
     borderBottomWidth: 0.8
 
-    //     shadowColor: "#000",
-    //     shadowOffset: { width: 0, height: 2 },
-    //     shadowOpacity: 0.8,
-    //     shadowRadius: 2
   },
   itemsHeader: {
     height: 45,

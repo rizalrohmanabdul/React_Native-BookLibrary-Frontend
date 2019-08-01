@@ -13,19 +13,40 @@ import RadioForm, {
   RadioButtonLabel
 } from "react-native-simple-radio-button";
 import {registrasiPeminjam} from "../Public/redux/actions/peminjam"
-
+import {connect} from 'react-redux'
 import Logo from "../Components/Logo";
 
+
 class Register extends Component {
+  constructor(props) {
+		super(props);
+	
+		this.state = {
+			email: '',
+      password: '',
+      id_ktp: '',
+      nama_peminjam: '',
+      jk: '',
+      alamat: '',
+			loading: false
+		};
+  }
+  registerList =  () =>{
+    
+    this.props.dispatch(registrasiPeminjam(this.state))
+     .then(()=>{
+      alert('Registrasi Success !!!')
+      this.props.navigation.navigate('Login');
+     }).catch((err)=>{
+       console.warn(err)
+     })
+ }
   render() {
     var radio_props = [
       {label: 'Perempuan', value: 0 },
       {label: 'Laki-Laki', value: 1 }
     ];
-    const registerList = async() =>{
-      await this.props.dispatch(registrasiPeminjam(this.state))    
-      console.warn(this.state)
-    }
+
     return (
       <View style={styles.container}>
         <Logo />
@@ -76,7 +97,7 @@ class Register extends Component {
               placeholderTextColor="#ffffff"
               onChangeText = {(e)=>this.setState({password:e})}
             />
-            <TouchableOpacity style={styles.button} onPress={registerList.bind(this)}>
+            <TouchableOpacity style={styles.button} onPress={this.registerList}>
               <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
           </View>
@@ -151,4 +172,13 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
-export default Register;
+const mapStateToProps = state => {
+  return {
+    peminjam: state.peminjam
+  };
+};
+
+export default connect(mapStateToProps)(Register);
+
+// export default connect(state => ({peminjam: state.peminjam}))(Register)
+

@@ -1,5 +1,5 @@
 import axios from "axios";
-let URL = "http://localhost:3342";
+let URL = "http://192.168.100.42:3342";
 
 
 export const currentLogin = (data) => {
