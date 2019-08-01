@@ -1,4 +1,5 @@
 import React, { Component } from "React";
+import moment from "moment";
 import {
   FlatList,
   Text,
@@ -12,24 +13,23 @@ import {
   ActivityIndicator,
   AsyncStorage
 } from "react-native";
-import { getbyidUserPeminjaman} from "../Public/redux/actions/peminjaman"
-import {connect} from 'react-redux';
+import { getbyidUserPeminjaman } from "../Public/redux/actions/peminjaman";
+import { connect } from "react-redux";
 
 class Historyborrow extends Component {
-    constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 
-		this.state = { 
-			peminjamanlist: []
-		};
+    this.state = {
+      peminjamanlist: []
+    };
   }
   componentDidMount = async () => {
-    await this.props.dispatch(getbyidUserPeminjaman('35112378908001'));
+    await this.props.dispatch(getbyidUserPeminjaman("35112378908001"));
     this.setState({
-        peminjamanlist: this.props.listpeminjaman.listPeminjaman.result,
+      peminjamanlist: this.props.listpeminjaman.listPeminjaman.result
     });
-    console.log('ini warm', this.state.peminjamanlist);
-    
+    console.log("ini warm", this.state.peminjamanlist);
   };
   render() {
     return (
@@ -63,7 +63,7 @@ class Historyborrow extends Component {
             </Text>
           </View>
         </View>
-        <View style={{marginTop: 70}}>
+        <View style={{ marginTop: 70 }}>
           <FlatList
             data={this.state.peminjamanlist}
             // data={this.state.bookhome}
@@ -100,14 +100,40 @@ class Historyborrow extends Component {
                     <View
                       style={{ flex: 1, flexDirection: "column", margin: 5 }}
                     >
-                      <Text style={{ flex: 1, fontWeight: 'bold' }}> {item.nama_buku}</Text>
+                      <Text style={{ flex: 1, fontWeight: "bold" }}>
+                        {item.nama_buku}
+                      </Text>
                       <Text style={{ flex: 1 }}>{item.nama_kategori}</Text>
-                      <Text style={{ flex: 1 }}>{item.description}</Text>
-                      <Text style={{ flex: 1 }}>{item.description}</Text>
+                      <Text style={{ flex: 1 }}>
+                        Lama Pinjam {item.lama_pinjam} Hari
+                      </Text>
+                      {item.tgl_kembali === "0000-00-00" ? (
+                        <Text style={{ flex: 1 }}>
+                          Harus Kembali Pada{" "}
+                          {moment(item.tgl_kadaluarsa).format("DD-MM-YYYY")}
+                        </Text>
+                      ) : (
+                        <Text style={{ flex: 1 }}>
+                          Telah Kembali Pada{" "}
+                          {moment(item.tgl_kembali).format("DD-MM-YYYY")}
+                        </Text>
+                      )}
+
                       <View style={{ flex: 1, flexDirection: "row" }}>
-                        <Text style={{ flex: 1 }}>Denda : 90.000</Text>
+                        <Text style={{ flex: 1 }}>
+                          Denda :{" "}
+                          {moment().format("YYYY-MM-DD") <
+                          moment(item.tgl_kadaluarsa).format("YYYY-MM-DD")
+                            ? "0"
+                            : "3000"}
+                        </Text>
                         <View style={{ flex: 1 }}>
-                          <Text style={{ textAlign: "right" }}>Selesai</Text>
+                          <Text style={{ textAlign: "right" }}>
+                            {" "}
+                            {item.tgl_kembali === "0000-00-00"
+                              ? "Dipinjam"
+                              : "Selesai"}
+                          </Text>
                         </View>
                       </View>
                     </View>
@@ -123,9 +149,9 @@ class Historyborrow extends Component {
 }
 
 const mapStateToProps = state => {
-    return {
-      listpeminjaman: state.peminjaman
-    };
+  return {
+    listpeminjaman: state.peminjaman
   };
-  
-  export default connect(mapStateToProps)(Historyborrow);
+};
+
+export default connect(mapStateToProps)(Historyborrow);
