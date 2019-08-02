@@ -28,6 +28,7 @@ class DrawerHome extends React.Component {
         });
       }
     });
+
   }
   logout = () => {
     AsyncStorage.clear().then(() => {

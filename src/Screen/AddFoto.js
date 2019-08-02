@@ -14,6 +14,7 @@ import {
 } from "react-native";
 
 import ImagePicker from "react-native-image-picker";
+import axios from "axios";
 
 class Historyborrow extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class Historyborrow extends Component {
       ImageSource: null
     };
   }
-  selectPhotoTapped () {
+  selectPhotoTapped() {
     const options = {
       quality: 1.0,
       maxWidth: 500,
@@ -54,11 +55,38 @@ class Historyborrow extends Component {
       }
     });
   }
+
+  saveimageto = () => {
+
+    alert('Your Foto has been Changed !!!')
+    this.props.navigation.navigate('Home');
+
+    //   console.warn('as', image.uri)
+    //   const timeStamp = Date.now()/1000;
+    //   let formData = new FormData();
+    //   formData.append("api_key",'592491942836456');
+    //   formData.append("file", image.uri);
+    //   formData.append("public_id", "sample_image");
+    //   formData.append("timestamp", timeStamp);
+    //   formData.append("upload_preset", 'kxl1uom6');
+  
+    //   axios
+    //   .post('https://api.cloudinary.com/v1_1/downloadaplikasi27/image/upload', formData)
+    //   .then((result) => {
+    //       console.warn(result);
+    //   })
+    //   .catch((err) => {
+    //       alert('gagal')
+    //       console.warn(err);
+    //   })    
+  }
   render() {
     return (
       <View style={{ flex: 1 }}>
         <View style={{ flex: 2, backgroundColor: "red", alignItems: "center" }}>
-          <Text style={{ color: "#fff", fontSize: 24 , textAlign: 'center'}}>Welcome To Book Library, Please Pick Your foto </Text>
+          <Text style={{ color: "#fff", fontSize: 24, textAlign: "center" }}>
+            Welcome To Book Library, Please Pick Your foto{" "}
+          </Text>
         </View>
         <View style={{ flex: 9, justifyContent: "flex-start" }}>
           <View
@@ -69,26 +97,27 @@ class Historyborrow extends Component {
               paddingTop: 10
             }}
           >
-              { this.state.ImageSource === null ? <Image
-              style={{
-                width: 120,
-                height: 120,
-                borderRadius: 100,
-                backgroundColor: "green"
-              }}
-              source={require("../assets/img/1564481740.jpg")}
-            /> :
-            <Image
-              style={{
-                width: 120,
-                height: 120,
-                borderRadius: 100,
-                backgroundColor: "green"
-              }}
-              source={this.state.ImageSource}
-            />
-            }
-            
+            {this.state.ImageSource === null ? (
+              <Image
+                style={{
+                  width: 120,
+                  height: 120,
+                  borderRadius: 100,
+                  backgroundColor: "green"
+                }}
+                source={require("../assets/img/1564481740.jpg")}
+              />
+            ) : (
+              <Image
+                style={{
+                  width: 120,
+                  height: 120,
+                  borderRadius: 100,
+                  backgroundColor: "green"
+                }}
+                source={this.state.ImageSource}
+              />
+            )}
           </View>
         </View>
         <View
@@ -99,15 +128,27 @@ class Historyborrow extends Component {
             paddingLeft: 15
           }}
         >
-          <TouchableOpacity style={{ flex: 1 }} onPress={this.selectPhotoTapped.bind(this)}>
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            onPress={this.selectPhotoTapped.bind(this)}
+          >
             <Text>Ambil Foto</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{ flex: 1, alignItems: "flex-end" }}
-            onPress={() => this.props.navigation.navigate("Home")}
-          >
-            <Text>Lain Kali</Text>
-          </TouchableOpacity>
+          {this.state.ImageSource === null ? (
+            <TouchableOpacity
+              style={{ flex: 1, alignItems: "flex-end" }}
+              onPress={() => this.props.navigation.navigate("Home")}
+            >
+              <Text>Lain Kali</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={{ flex: 1, alignItems: "flex-end" }}
+              onPress={this.saveimageto}
+            >
+              <Text>Finish</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     );

@@ -12,7 +12,7 @@ const HomeNavigator = createStackNavigator({
     History,
     AddFoto
 }, {
-    initialRouteName:'AddFoto',
+    initialRouteName:'Home',
     headerMode: 'none'
 }
 )
