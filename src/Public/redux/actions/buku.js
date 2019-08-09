@@ -1,12 +1,12 @@
 import axios from "axios";
-let URL = 'http://localhost:3342'
+let URL = 'https://perpusfinal.herokuapp.com';
 
-let token = localStorage.getItem("token")
-let id = localStorage.getItem("id")
+// let token = localStorage.getItem("token")
+// let id = localStorage.getItem("id")
 let auth ={
   'authorization' : 'w3lc0meto4pp',
-  'x-access-token' : token,
-  'x-control-user': id
+  // 'x-access-token' : token,
+  // 'x-control-user': id
 }
 
 export const getBuku = () => {
@@ -33,11 +33,11 @@ export const getBukuactive = () => {
 };
 
 export const postBuku = (data) => {
-  console.log('ini dari aksi',data[0]);
+  console.log('ini dari aksi',data);
   // {id_ktp:data[0].id_ktp, nama_KATEGORI: data[0].nama_KATEGORI, alamat: data[0].alamat}
   return {
     type: "POST_BUKU",
-    payload: axios.post(URL+'/book', data[0])
+    payload: axios.post(URL+'/book', data)
   };
 };
 

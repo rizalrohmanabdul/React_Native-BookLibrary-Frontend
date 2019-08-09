@@ -1,11 +1,11 @@
 import axios from "axios";
-let URL = 'http://localhost:3342'
-let token = localStorage.getItem("token")
-let id = localStorage.getItem("id")
+let URL = 'https://perpusfinal.herokuapp.com';
+// let token = localStorage.getItem("token")
+// let id = localStorage.getItem("id")
 let auth ={
   'authorization' : 'w3lc0meto4pp',
-  'x-access-token' : token,
-  'x-control-user': id
+  // 'x-access-token' : token,
+  // 'x-control-user': id
 }
 
 export const getKategori = () => {

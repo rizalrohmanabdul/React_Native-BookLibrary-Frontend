@@ -93,7 +93,7 @@ class Historyborrow extends Component {
             style={{
               minHeight: 100,
               width: "100%",
-              alignItems: "center",
+              alignItems: "left",
               paddingTop: 10
             }}
           >

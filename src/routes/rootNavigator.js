@@ -5,12 +5,18 @@ import Register from '../Screen/Register'
 import History from '../Screen/Historyborrow'
 import AddFoto from '../Screen/AddFoto'
 import Drawerhome from '../Components/DrawerHome'
+import Donasi from '../Screen/Donasi'
+import Loading from '../assets/mainservice'
+import DetailBook from '../Screen/Detailbook'
 const HomeNavigator = createStackNavigator({
     Home,
     Login,
     Register,
     History,
-    AddFoto
+    AddFoto,
+    Donasi,
+    Loading,
+    DetailBook
 }, {
     initialRouteName:'Home',
     headerMode: 'none'

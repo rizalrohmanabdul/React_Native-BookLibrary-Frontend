@@ -1,5 +1,5 @@
 import axios from "axios";
-let URL = 'http://192.168.100.42:3342'
+let URL = 'https://perpusfinal.herokuapp.com';
 
 let token = ''
 let id = ''

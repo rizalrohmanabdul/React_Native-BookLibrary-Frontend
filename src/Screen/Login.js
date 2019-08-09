@@ -23,9 +23,10 @@ class Login extends Component {
   loginUser = () => {
     this.props.dispatch(currentLogin(this.state))
      .then(()=>{
-      alert('Login Success !!!')
-      this.props.navigation.navigate('AddFoto');
-     }).catch((err)=>{
+      alert('Login Success !!!').then(()=>{
+        this.props.navigation.navigate('Home');
+      })
+     }).catch(()=>{
        alert('Wrong Username And Password !!!')
      })
   }

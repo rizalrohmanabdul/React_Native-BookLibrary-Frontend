@@ -31,8 +31,10 @@ class DrawerHome extends React.Component {
 
   }
   logout = () => {
+    this.props.navigation.navigate('Loading');
     AsyncStorage.clear().then(() => {
       alert("Thank You !!!");
+      this.props.navigation.navigate('Home');
     });
   };
 
@@ -85,7 +87,8 @@ class DrawerHome extends React.Component {
                 <FlatList
                   data={[
                     { Menuname: "Home", icon: "" },
-                    { Menuname: "Login", icon: "" }
+                    { Menuname: "Login", icon: "" },
+                    { Menuname: "Donasi", icon: "" }
                   ]}
                   renderItem={({ item }) => {
                     return (

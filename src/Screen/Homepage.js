@@ -1,4 +1,4 @@
-import React, { Component } from "React";
+import React, { Component, Fragment } from "React";
 import {
   FlatList,
   Text,
@@ -14,85 +14,176 @@ import {
 } from "react-native";
 import { Container, Header, Content, Card, CardItem, Body } from "native-base";
 import getHome from "../Public/redux/actions/home";
-import {connect} from 'react-redux';
-
+import { connect } from "react-redux";
+import Axios from "axios";
 function text(text) {
-  if(text.length > 15){
-      let textSplit = text.substr(0, 15)
-      return `${textSplit} ...`    
-  }else{
-      let textSplit = text
-      return `${textSplit}`
-  }    
+  if (text.length > 15) {
+    let textSplit = text.substr(0, 15);
+    return `${textSplit} ...`;
+  } else {
+    let textSplit = text;
+    return `${textSplit}`;
+  }
 }
 class Homepage extends Component {
   constructor(props) {
-		super(props);
+    super(props);
 
-		this.state = { 
-			bookhome: []
-		};
+    this.state = {
+      bookhome: [],
+      loading: false,
+      page: 1
+    };
   }
   componentDidMount = async () => {
-    await this.props.dispatch(getHome());
+    // await this.fetchUser();
+    const { page } = this.state;
+    await this.props.dispatch(getHome(page)).then(() => {
+      this.setState({
+        loading: true
+      });
+    });
     this.setState({
       bookhome: this.props.listbookhome.listBuku.result
     });
   };
-
-    renderFooter = () => {
-      return (
-        <View>
-          <View style={{ paddingVertical: 12 }}>
-            <ActivityIndicator animating size="large" color="#333333" />
-          </View>
-        </View>
-      );
-    };
+  fetchUser() {
+    const { page } = this.state;
+    const url = `https://perpusfinal.herokuapp.com/book/?page=${page}`;
+    Axios
+      .get(url)
+      .then(res => {
+        this.setState({
+            loading: true,
+            bookhome: this.state.bookhome.concat(res.data.result)
+        })
+        console.warn('ini res', res.data.result)
+    }).catch(() => {
+        this.setState({ loading: true })
+    })
+  }
+  renderFooter = () => {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#fff",
+          marginVertical: 15
+        }}
+      >
+        <>
+          <ActivityIndicator animating size="large" />
+          <Text style={{ fontSize: 12 }}>Loading data..</Text>
+        </>
+      </View>
+    );
+  };
+  handleLoadMore = () => {
+    this.setState({
+        page: this.state.page + 1,
+    }, () => {
+        this.fetchUser()
+    })
+}
+  handlePullRefresh = async () => {
+    await this.setState({ loading: true });
+    await this.props.dispatch(getHome()).then(() => {
+      this.setState({
+        page: 1,
+        bookhome: this.props.listbookhome.listBuku.result,
+        loading: true
+      });
+    });
+  };
   render() {
     return (
       <React.Fragment>
-        <View style={component.header}>
-          <View style={component.itemsHeader}>
-          <Text style={component.items}>BOOK</Text>
-          </View>
-        </View>
-        <View style={component.body}>
+        {this.state.loading == false ? (
           <View
             style={{
-              backgroundColor: "transparent",
-              borderBottomColor: "transparent"
+              height: 500,
+              width: "100%",
+              flex: 1,
+              justifyContent: "center",
+              alignContent: "center"
             }}
           >
-            <TextInput style={component.input} placeholder="Search" />
-          </View>
-            <FlatList
-              data={this.state.bookhome}
-              ListFooteerComponent={this.renderFooter}
-              numColumns={2}
-              style={{ paddingLeft: 15, paddingRight: 15, flex: 1, height: '100%' }}
-              keyExtractor={item => item.id_buku.toString()}
-              renderItem={({ item }) => {
-                return (
-                  <TouchableOpacity  onPress={()=>  alert(item.id_buku)}>
-                    <Card style={{ margin: 8, borderRadius: 8 }} elevation={4}>
-                      <Image
-                        style={{
-                          width: 150,
-                          height: 200,
-                          borderRadius: 8
-                        }}
-                        source={{ uri: item.gbr }}
-                      />
-                      <CardItem footer bordered>
-                        <Text>{text(item.nama_buku)}</Text>
-                      </CardItem>
-                    </Card>
-                  </TouchableOpacity>
-                );
+            <ActivityIndicator
+              color="black"
+              size="large"
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignContent: "center"
               }}
             />
-        </View>
+          </View>
+        ) : (
+          <Fragment>
+            <View style={component.header}>
+              <View style={component.itemsHeader}>
+                <Text style={component.items}>BOOK</Text>
+              </View>
+            </View>
+            <View style={component.body}>
+              <View
+                style={{
+                  backgroundColor: "transparent",
+                  borderBottomColor: "transparent"
+                }}
+              >
+                <TextInput style={component.input} placeholder="Search" />
+              </View>
+              <FlatList
+                data={this.state.bookhome}
+                numColumns={2}
+                style={{
+                  paddingLeft: 15,
+                  paddingRight: 15,
+                  flex: 1,
+                  height: "100%"
+                }}
+                ListFooterComponent={this.renderFooter.bind(this)}
+                showsVerticalScrollIndicator={false}
+                onEndReachedThreshold={0.1}
+                onEndReached={this.handleLoadMore.bind(this)}
+                keyExtractor={item => item.id_buku.toString()}
+                refreshing={this.state.loading}
+                onRefresh={this.handlePullRefresh}
+                renderItem={({ item }) => {
+                  return (
+                    <TouchableOpacity
+                      onPress={() =>
+                        this.props.navigation.navigate("DetailBook", {
+                          id_buku: item.id_buku
+                        })
+                      }
+                    >
+                      <Card
+                        style={{ margin: 8, borderRadius: 8 }}
+                        elevation={4}
+                      >
+                        <Image
+                          style={{
+                            width: 150,
+                            height: 200,
+                            borderRadius: 8
+                          }}
+                          source={{ uri: item.gbr }}
+                        />
+                        <CardItem footer bordered>
+                          <Text>{text(item.nama_buku)}</Text>
+                        </CardItem>
+                      </Card>
+                    </TouchableOpacity>
+                  );
+                }}
+              />
+            </View>
+          </Fragment>
+        )}
       </React.Fragment>
     );
   }
@@ -112,7 +203,6 @@ const component = StyleSheet.create({
     width: "100%",
     borderBottomColor: "black",
     borderBottomWidth: 0.8
-
   },
   itemsHeader: {
     height: 45,
