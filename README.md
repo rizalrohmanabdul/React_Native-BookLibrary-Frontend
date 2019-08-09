@@ -38,9 +38,11 @@ Explain how to run the automated tests for this system
 Explain what these tests test and why
 
 ```
-npm start
+react-native run-android  
 ```
-
+```
+react-native start
+```
 
 ## Deployment
 
